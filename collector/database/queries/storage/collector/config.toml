@@ -1,0 +1,49 @@
+[SELECT]
+config = """
+SELECT interval, is_paused, next_run_at FROM collector.config WHERE name = %(name)s
+"""
+
+[UPDATE]
+running = """
+UPDATE collector.config
+SET status = 'running', last_run_at = now()
+WHERE name = %(name)s
+"""
+
+success = """
+UPDATE collector.config
+SET status = 'idle',
+    run_count = run_count + 1,
+    last_error = NULL,
+    updated_at = now(),
+    next_run_at = now() + (interval * interval '1 second')
+WHERE name = %(name)s
+"""
+
+error = """
+UPDATE collector.config
+SET status = 'error', error_count = error_count + 1, last_error = %(error)s, updated_at = now()
+WHERE name = %(name)s
+"""
+
+paused = """
+UPDATE collector.config
+SET status = 'paused', updated_at = now()
+WHERE name = %(name)s
+"""
+
+set_next_run_on_force = """
+UPDATE collector.config
+SET next_run_at = now() + (interval * interval '1 second'),
+    updated_at = now()
+WHERE name = %(name)s
+"""
+
+[INSERT]
+on_conflict = """
+INSERT INTO collector.config (name, interval)
+VALUES (%(name)s, %(interval)s)
+ON CONFLICT (name) DO UPDATE SET
+    interval = EXCLUDED.interval,
+    updated_at = now()
+"""

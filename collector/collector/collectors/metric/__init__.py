@@ -1,0 +1,5 @@
+from collector.collectors.metric.index import IndexMetricCollector
+from collector.collectors.metric.column import ColumnMetricCollector
+from collector.collectors.metric.table import TableMetricCollector
+from collector.collectors.metric.session import SessionMetricCollector
+from collector.collectors.metric.lock import LockMetricCollector

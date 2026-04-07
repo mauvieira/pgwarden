@@ -1,0 +1,28 @@
+[SELECT]
+pending = """
+SELECT id, collector, command, payload
+FROM "collector"."command"
+WHERE executed_at IS NULL
+ORDER BY created_at
+"""
+
+[UPDATE]
+executed = """
+UPDATE "collector"."command"
+SET
+    executed_at = now(),
+    error = %(error)s
+WHERE id = %(id)s
+"""
+
+consume_command = """
+UPDATE collector.command
+SET executed_at = now()
+WHERE id = (
+    SELECT id FROM collector.command
+    WHERE collector = %(name)s AND executed_at IS NULL
+    ORDER BY created_at LIMIT 1
+    FOR UPDATE SKIP LOCKED
+)
+RETURNING command, payload;
+"""
