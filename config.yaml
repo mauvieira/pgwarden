@@ -2,8 +2,19 @@ servers:
   - name: local
     host: pgwarden_db
     port: 5432
-    username: postgres
+
+    username: postgres  # No superuser/admin privileges needed. Access to pg_stat_* views (pg_monitor role) is sufficient.
     password: postgres
-    ssl_mode: prefer
-    databases:
+    
+    ssl_mode: prefer    # Connection security mode (disable, allow, prefer, require, verify-ca, verify-full).
+
+    databases:          # List of databases to be monitored on this server.
       - postgres
+
+    # ignore_tables:  # Tables to skip. If no schema is provided, 'public' is assumed.
+      # - audit_log   
+    
+    # include_tables:  # If set, ONLY these tables will be collected (allow-list). 
+      # - users     
+    
+    # ignore_pattern: "^temp_.*"  # Regex pattern to ignore tables. Matched against 'schema.table'.
