@@ -1,0 +1,9 @@
+servers:
+  - name: local
+    host: pgwarden_db
+    port: 5432
+    username: postgres
+    password: postgres
+    ssl_mode: prefer
+    databases:
+      - postgres
