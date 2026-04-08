@@ -1,0 +1,5 @@
+from database.models.metric.table import TableMetric
+from database.models.metric.index import IndexMetric
+from database.models.metric.column import ColumnMetric
+from database.models.metric.session import SessionMetric
+from database.models.metric.lock import LockMetric

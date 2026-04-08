@@ -1,0 +1,17 @@
+.idea
+.vscode
+
+*.md
+
+.git
+.gitignore
+
+.env.example
+.env
+yoyo.example.ini
+
+**\__pycache__
+tests
+
+.venv
+readme.md
