@@ -9,5 +9,6 @@ COPY . .
 
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONFAULTHANDLER=1
+ENV PATH="/app/.venv/bin:$PATH"
 
-CMD ["python", "-m", "collector.main"]
+CMD ["python", "main.py"]
