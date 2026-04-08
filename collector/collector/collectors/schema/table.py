@@ -1,9 +1,11 @@
 from psycopg.rows import dict_row
 
+from database import (
+    DatabaseConnection, load_monitored_query,
+    load_storage_query, MonitoredDatabase
+)
 from collector.collectors.result import SyncResult
-from database import DatabaseConnection, load_monitored_query, load_storage_query
 from collector.collectors.base import BaseCollector
-from collector.database.registry import MonitoredDatabase
 from log import logger
 
 

@@ -2,7 +2,10 @@ from datetime import datetime, timezone
 
 from psycopg.rows import dict_row
 
-from database import DatabaseConnection, load_monitored_query, load_storage_query
+from database import (
+    DatabaseConnection, load_monitored_query,
+    load_storage_query
+)
 from collector.collectors.base import BaseCollector
 from collector.collectors.result import SyncResult
 from log import logger

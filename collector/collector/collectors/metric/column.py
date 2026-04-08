@@ -2,7 +2,10 @@ from datetime import datetime, timezone
 
 from psycopg.rows import dict_row
 
-from database import DatabaseConnection, load_monitored_query, load_storage_query
+from database import (
+    DatabaseConnection, load_monitored_query,
+    load_storage_query
+)
 from collector.collectors.base import BaseCollector
 from collector.collectors.result import SyncResult
 from log import logger
@@ -35,7 +38,6 @@ class ColumnMetricCollector(BaseCollector):
                 return result
 
             collected_at = datetime.now(timezone.utc)
-            col_metrics = []
 
             async with self.monitored_db as conn:
                 async with conn.cursor(row_factory=dict_row) as cur:
