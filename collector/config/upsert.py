@@ -2,7 +2,7 @@ from psycopg.rows import dict_row
 
 from database import load_storage_query
 from log import logger
-from utils import encrypt, decrypt
+from utils import encrypt
 
 
 async def _upsert_server(conn, entry: dict) -> int:
@@ -12,11 +12,11 @@ async def _upsert_server(conn, entry: dict) -> int:
         await cur.execute(load_storage_query(schema="collector", table="server", query_type="INSERT", query_name="default"), {
             "name":     name,
             "host":     encrypt(entry["host"]),
-            "port":     encrypt(str(entry.get("port", 5432))),
+            "port":     encrypt(str(entry.get("port"))),
             "username": encrypt(entry["username"]),
             "password": encrypt(entry["password"]),
             "ssl_mode": entry.get("ssl_mode", "prefer"),
-            "ignore_pattern": entry.get("ignore_pattern"),
+            "ignore_patterns": entry.get("ignore_patterns"),
             "ignore_tables":  entry.get("ignore_tables"),
             "include_tables": entry.get("include_tables"),
         })
@@ -36,7 +36,7 @@ async def _upsert_database(conn, server_id: int, db_name: str) -> None:
 
     for row in existing_dbs:
         try:
-            if decrypt(row["db_name"]) == db_name:
+            if row["db_name"] == db_name:
                 await logger.info("Bootstrap", "Insert", f"server_id={server_id} '{db_name}' already registered — skipping")
                 return
         except Exception as error:
@@ -46,7 +46,7 @@ async def _upsert_database(conn, server_id: int, db_name: str) -> None:
     async with conn.cursor() as cur:
         await cur.execute(load_storage_query(schema="metadata", table="database", query_type="INSERT", query_name="default"), {
             "server_id": server_id,
-            "db_name":   encrypt(db_name),
+            "db_name": db_name,
         })
         row = await cur.fetchone()
 

@@ -17,7 +17,7 @@ class MonitoredDatabase:
     server_id:       int
     name:            str
     conninfo:        str
-    ignore_pattern:  str | None = None
+    ignore_patterns: list[str] | None = None
     ignore_tables:   list[str] | None = None
     include_tables:  list[str] | None = None
 
@@ -30,9 +30,11 @@ class MonitoredDatabase:
             if full_name in normalized_ignore:
                 return False
 
-        # 2. ignore_pattern
-        if self.ignore_pattern and re.search(self.ignore_pattern, full_name, re.IGNORECASE):
-            return False
+        # 2. ignore_patterns
+        if self.ignore_patterns:
+            for pattern in self.ignore_patterns:
+                if re.search(pattern, full_name, re.IGNORECASE):
+                    return False
 
         # 3. include_tables (lowest priority / restrictive allow-list)
         if self.include_tables:
@@ -64,7 +66,7 @@ class DatabaseRegistry:
                 port     = decrypt(row["port"])
                 username = decrypt(row["username"])
                 password = decrypt(row["password"])
-                db_name  = decrypt(row["db_name"])
+                db_name  = row["db_name"]
             except Exception as error:
                 await logger.error(
                     "DatabaseRegistry",
@@ -94,7 +96,7 @@ class DatabaseRegistry:
                 server_id=row["server_id"],
                 name=label,
                 conninfo=conninfo,
-                ignore_pattern=row.get("ignore_pattern"),
+                ignore_patterns=row.get("ignore_patterns"),
                 ignore_tables=row.get("ignore_tables"),
                 include_tables=row.get("include_tables"),
             )

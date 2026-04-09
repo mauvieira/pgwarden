@@ -10,7 +10,7 @@ SELECT
     ms.username,
     ms.password,
     ms.ssl_mode,
-    ms.ignore_pattern,
+    ms.ignore_patterns,
     ms.ignore_tables,
     ms.include_tables,
     md.db_name

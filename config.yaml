@@ -17,4 +17,6 @@ servers:
     # include_tables:  # If set, ONLY these tables will be collected (allow-list). 
       # - users     
     
-    # ignore_pattern: "^temp_.*"  # Regex pattern to ignore tables. Matched against 'schema.table'.
+    ignore_patterns:
+      - "^_timescale.*"
+      - "^pg_.*"
