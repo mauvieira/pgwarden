@@ -8,7 +8,7 @@ from database.connection import DatabaseConnection
 
 
 router = APIRouter(
-    prefix="/schema",
+    prefix="/schemas",
     tags=["schema"]
 )
 

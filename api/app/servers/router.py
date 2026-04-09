@@ -11,7 +11,7 @@ from utils import encrypt
 
 
 router = APIRouter(
-    prefix="/server",
+    prefix="/servers",
     tags=["server"]
 )
 

@@ -18,6 +18,7 @@ class CollectorState:
     name:        str
     interval:    float
     fn:          Callable[[], Coroutine]
+    config_id:   int
     status:      CollectorStatus      = CollectorStatus.IDLE
     last_run_at: datetime | None      = None
     last_error:  str | None           = None

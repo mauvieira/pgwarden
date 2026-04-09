@@ -58,6 +58,7 @@ class SessionMetricCollector(BaseCollector):
                     await conn.commit()
 
             result.inserted = len(to_insert)
+            await logger.info("SessionMetricCollector", "sessions", f"Collected {result.inserted} session metrics (db_id={self._db_id})")
         except Exception as error:
             await logger.error("SessionCollector", "sessions", f"Failed: {error}")
             raise

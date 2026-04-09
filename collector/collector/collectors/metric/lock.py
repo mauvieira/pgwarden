@@ -60,6 +60,7 @@ class LockMetricCollector(BaseCollector):
                     await conn.commit()
 
             result.inserted = len(to_insert)
+            await logger.info("LockMetricCollector", "locks", f"Collected {result.inserted} lock metrics (db_id={self._db_id})")
         except Exception as error:
             await logger.error("LockCollector", "locks", f"Failed: {error}")
             raise

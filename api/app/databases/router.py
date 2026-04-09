@@ -10,7 +10,7 @@ from utils import encrypt, decrypt
 
 
 router = APIRouter(
-    prefix="/database",
+    prefix="/databases",
     tags=["database"]
 )
 

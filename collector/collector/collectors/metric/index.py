@@ -66,7 +66,7 @@ class IndexMetricCollector(BaseCollector):
                 await conn.commit()
 
             result.inserted = len(to_insert)
-            await logger.info("IndexMetricCollector", "indexes", str(result))
+            await logger.info("IndexMetricCollector", "indexes", f"Collected {result.inserted} index metrics (db_id={self._db_id})")
 
         except Exception as error:
             await logger.error("IndexMetricCollector", "indexes", f"Failed (db_id={self._db_id}): {error}")

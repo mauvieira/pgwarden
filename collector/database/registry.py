@@ -148,3 +148,6 @@ class DatabaseRegistry:
 
     def get(self, db_id: int) -> MonitoredDatabase | None:
         return self._databases.get(db_id)
+
+    def server_ids(self) -> list[int]:
+        return list({db.server_id for db in self._databases.values()})

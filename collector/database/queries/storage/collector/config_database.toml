@@ -1,0 +1,49 @@
+[SELECT]
+by_id = """
+SELECT id, database_id, name, interval, is_paused, next_run_at
+FROM collector.config_database
+WHERE id = %(id)s
+"""
+
+by_database_id = """
+SELECT id, database_id, name, interval, is_paused, next_run_at
+FROM collector.config_database
+WHERE database_id = %(database_id)s
+"""
+
+[UPDATE]
+running = """
+UPDATE collector.config_database
+SET next_run_at = now() + (interval * interval '1 second')
+WHERE id = %(id)s
+"""
+
+success = """
+UPDATE collector.config_database
+SET next_run_at = now() + (interval * interval '1 second')
+WHERE id = %(id)s
+"""
+
+error = """
+UPDATE collector.config_database
+SET next_run_at = now() + (interval * interval '1 second')
+WHERE id = %(id)s
+"""
+
+paused = """
+UPDATE collector.config_database
+SET is_paused = %(is_paused)s
+WHERE id = %(id)s
+"""
+
+set_next_run_on_force = """
+UPDATE collector.config_database
+SET next_run_at = now()
+WHERE id = %(id)s
+"""
+
+set_interval = """
+UPDATE collector.config_database
+SET interval = %(interval)s
+WHERE id = %(id)s
+"""
