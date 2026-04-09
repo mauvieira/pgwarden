@@ -21,6 +21,25 @@ services:
       timeout: 5s
       retries: 5
 
+  migrations:
+    build:
+      context: ./migrations
+      dockerfile: Dockerfile
+    container_name: pgwarden_migrations
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=db
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=${DB_PORT:-5432}
+    networks:
+      - pgwarden_network
+
   api:
     build:
       context: ./api
@@ -31,6 +50,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      migrations:
+        condition: service_completed_successfully
     env_file:
       - .env
     environment:
@@ -55,6 +76,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      migrations:
+        condition: service_completed_successfully
     env_file:
       - .env
     volumes:
