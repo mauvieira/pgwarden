@@ -48,15 +48,15 @@ tags_metadata = [
         "description": "Authentication and authorization endpoints. Handles login and JWT token refresh.",
     },
     {
-        "name": "server",
+        "name": "servers",
         "description": "Manage registered PostgreSQL servers. Connection credentials are encrypted and stored securely.",
     },
     {
-        "name": "database",
+        "name": "databases",
         "description": "Manage monitored databases linked to the registered servers.",
     },
     {
-        "name": "schema",
+        "name": "schemas",
         "description": "Expose the currently collected schema metadata (tables, columns, indexes).",
     },
 ]
