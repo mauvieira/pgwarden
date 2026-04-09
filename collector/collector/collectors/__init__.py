@@ -4,3 +4,6 @@ from collector.collectors.metric import (
     ColumnMetricCollector, SessionMetricCollector,
     LockMetricCollector
 )
+from collector.collectors.server import (
+    CpuCollector, RamCollector, DiskCollector, IoCollector
+)

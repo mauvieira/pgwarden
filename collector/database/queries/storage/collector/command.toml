@@ -24,5 +24,5 @@ WHERE id = (
     ORDER BY created_at LIMIT 1
     FOR UPDATE SKIP LOCKED
 )
-RETURNING command, payload;
+RETURNING id, command, payload;
 """
