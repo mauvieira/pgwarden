@@ -3,6 +3,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
 
+
 class ServerCreate(BaseModel):
     name: str
     host: str
@@ -14,10 +15,26 @@ class ServerCreate(BaseModel):
     ignore_tables: Optional[List[str]] = None
     include_tables: Optional[List[str]] = None
 
+
+class ServerTest(BaseModel):
+    name: str
+    host: str
+    port: str
+    username: str
+    password: str
+    ssl_mode: str = "prefer"
+
+
+class ServerCreatedResponse(BaseModel):
+    message: str
+    id: UUID
+
+
 class ServerDatabaseItem(BaseModel):
     id: UUID
 
     model_config = ConfigDict(from_attributes=True)
+
 
 class ServerListItem(BaseModel):
     id: UUID
@@ -26,3 +43,14 @@ class ServerListItem(BaseModel):
     databases: List[ServerDatabaseItem]
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class ConnectionTestSuccess(BaseModel):
+    status: str
+    version: str
+
+
+class ConnectionTestError(BaseModel):
+    status: str
+    code: str
+    detail: str

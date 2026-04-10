@@ -6,10 +6,15 @@ from fastapi.responses import JSONResponse
 from passlib.context import CryptContext
 
 from app.auth.router import router as auth_router
-from app.schema.router import router as schema_router
-from app.database.router import router as database_router
-from app.server.router import router as server_router
-from app.schema.exceptions import BaseAppException
+from app.schemas.router import router as schema_router
+from app.databases.router import router as database_router
+from app.servers.router import router as server_router
+from app.databases.sessions.router import router as sessions_router
+from app.databases.locks.router import router as locks_router
+from app.databases.configs.router import router as db_config_router
+from app.servers.config.router import router as srv_config_router
+from app.servers.metrics.router import router as srv_metrics_router
+from app.schemas.exceptions import BaseAppException
 from database.connection import DatabaseConnection
 from database.models.base import User
 from database.operations.base.user import UserRepository
@@ -59,6 +64,14 @@ tags_metadata = [
         "name": "schemas",
         "description": "Expose the currently collected schema metadata (tables, columns, indexes).",
     },
+    {
+        "name": "sessions",
+        "description": "Real-time session monitoring via Server-Sent Events.",
+    },
+    {
+        "name": "locks",
+        "description": "Real-time lock monitoring via Server-Sent Events.",
+    },
 ]
 
 app = FastAPI(
@@ -90,4 +103,9 @@ app.include_router(auth_router, prefix="/v1")
 app.include_router(schema_router, prefix="/v1")
 app.include_router(database_router, prefix="/v1")
 app.include_router(server_router, prefix="/v1")
+app.include_router(sessions_router, prefix="/v1")
+app.include_router(locks_router, prefix="/v1")
+app.include_router(db_config_router, prefix="/v1")
+app.include_router(srv_config_router, prefix="/v1")
+app.include_router(srv_metrics_router, prefix="/v1")
 

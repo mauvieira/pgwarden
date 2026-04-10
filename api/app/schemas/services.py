@@ -3,8 +3,8 @@ from uuid import UUID
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.schema.exceptions import DatabaseNotFoundError, SchemaFetchError
-from app.schema.models import (
+from app.schemas.exceptions import DatabaseNotFoundError, SchemaFetchError
+from app.schemas.models import (
     SchemaResponse, SchemaTableResponse, SchemaColumnResponse, SchemaIndexResponse
 )
 from database.models.metadata import (
