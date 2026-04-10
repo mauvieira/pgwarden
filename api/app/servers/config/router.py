@@ -4,8 +4,7 @@ from fastapi import APIRouter, HTTPException, Depends
 
 from app.servers.config.models import ConfigItem, ConfigPatch
 from database.connection import DatabaseConnection
-from database.operations.collector.config import ConfigServerRepository
-from database.operations.collector.server import ServerRepository
+from database.operations.collector import ConfigServerRepository, ServerRepository
 from app.auth.services import get_current_user
 
 

@@ -1,15 +1,17 @@
 from uuid import UUID
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
-from app.schema.models import SchemaResponse
-from app.schema.services import get_database_schema
+from app.schemas.models import SchemaResponse
+from app.schemas.services import get_database_schema
 from database.connection import DatabaseConnection
+from app.auth.services import get_current_user
 
 
 router = APIRouter(
     prefix="/schemas",
-    tags=["schema"]
+    tags=["schema"],
+    dependencies=[Depends(get_current_user)],
 )
 
 @router.get(

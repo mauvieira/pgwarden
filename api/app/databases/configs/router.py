@@ -2,7 +2,7 @@ from typing import List
 
 from fastapi import APIRouter, HTTPException, Depends
 
-from app.databases.config.models import ConfigItem, ConfigPatch
+from app.databases.configs.models import ConfigItem, ConfigPatch
 from database.connection import DatabaseConnection
 from database.operations.collector.config import ConfigDatabaseRepository
 from database.operations.metadata.database import DatabaseRepository
