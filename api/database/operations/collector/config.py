@@ -1,5 +1,5 @@
 from database.operations.interface import Interface
-from database.models.collector.config import ConfigDatabase, ConfigServer
+from database.models.collector import ConfigDatabase, ConfigServer
 
 
 class ConfigDatabaseRepository(Interface[ConfigDatabase]):
